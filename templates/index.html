@@ -17,27 +17,13 @@
   
   {% for book in books %}
     <a href="{{ url_for('index') }}">
-      <h2> {{ book.title }} </h2>
+      <h2><a href="/book/{{book.id}}">{{ book.title }}</a></h2>
+      
     </a>
     <span class="badge badge-primary">{{ book.release }}</span>
     <hr>
   {% endfor %}
-  {% endblock %}
-
-
-
-    <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Flask-Blog</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        
-    </ul>
-
-      <h1>Welcome to Home-Page</h1>
-      
+  {% endblock %}      
 
 </body>
 

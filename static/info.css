@@ -1,0 +1,20 @@
+.card {
+    background-color: #f8f9fa;
+    border-color: #adb5bd;
+}
+    
+.card-title {
+    color: #343a40;
+}
+    
+.card-subtitle,
+.card-text {
+    color: #6c757d; 
+}
+    
+.card-text strong {
+    color: #343a40; 
+}
+    
+
+/* THIS STYLES DOES NOT WORKING, SORRY */

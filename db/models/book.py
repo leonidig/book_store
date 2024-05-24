@@ -14,3 +14,4 @@ class Book(Base):
     author: Mapped[str]
     release: Mapped[date]
     isbn: Mapped[str] = mapped_column(String(13))
+    # image_path: Mapped[str] = mapped_column(String(255), nullable=True)

@@ -19,4 +19,5 @@ def down():
 from .models import Book
 
 
+down()
 up()

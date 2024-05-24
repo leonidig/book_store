@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{book.title}} - page </title>
+    <link rel="stylesheet" href="static/info.css">
 </head>
 <body>
-    {% extends 'base.html' %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
 
-    {% block content %}
-    <h2>{% block title %} {{ post.title }} {% endblock %}</h2>
-    <span class="badge badge-primary">{{ post.created }}</span>
-    <p>{{ post.content }}</p>
-    <a href="{{ url_for('edit_post', edit_id=post.id) }}">Edit Post</a>
-    {% endblock %}
+                <h1 class="card-title">Name :{{book.title}}</h1>
+                <h2 class="card-subtitle mb-2 text-muted">Author: {{book.author}}</h2>
+                <p class="card-text">Description: {{book.description}}</p>
+                <p class="card-text"><strong>Release Date:</strong> {{book.release}}</p>
+                <p class="card-text"><strong>ISBN:</strong> {{book.isbn}}</p>
 
+            </div>
+        </div>
+    </div>
 </body>
 </html>

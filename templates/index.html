@@ -12,12 +12,11 @@
 
 </head>
 <body>
-  {% extends 'base.html' %}
   {% block content %}
   <h1>{% block title %} Welcome to Book - Store {% endblock %}</h1>
   
   {% for book in books %}
-    <a href="{{ url_for('id', book_id=book.id) }}">
+    <a href="{{ url_for('index') }}">
       <h2> {{ book.title }} </h2>
     </a>
     <span class="badge badge-primary">{{ book.release }}</span>

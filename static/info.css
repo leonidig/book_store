@@ -1,20 +1,41 @@
 .card {
-    background-color: #f8f9fa;
-    border-color: #adb5bd;
+    background-color: #ffffff;
+    border-color: #ffffff;
 }
-    
+h1 {
+   font-size: 40px;
+}
+
+
+p {
+    font-size:20px;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+.container {
+    margin: 0 auto;
+    width: 7%;
+    background-color: white;
+}
+
 .card-title {
-    color: #343a40;
+    color: #000000;
 }
     
 .card-subtitle,
 .card-text {
-    color: #6c757d; 
+    color: #000000; 
 }
     
 .card-text strong {
-    color: #343a40; 
+    color: #000000; 
 }
-    
-
-/* THIS STYLES DOES NOT WORKING, SORRY */
+body{
+    background-color: white;
+}
+button{
+    font-size: 30px;
+}

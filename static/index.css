@@ -56,7 +56,7 @@ a:hover h2 {
 }
 
 /* Horizontal Rule Styles */
-hr {
+.hr {
     border: 0;
     height: 1px;
     background: #333;

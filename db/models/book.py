@@ -10,6 +10,7 @@ class Book(Base):
     __tablename__ = "books"
 
     title: Mapped[str]
+    price: Mapped[float]
     description: Mapped[str]
     author: Mapped[str]
     release: Mapped[date]

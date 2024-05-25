@@ -4,18 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{book.title}} - page </title>
-    <link rel="stylesheet" href="static/info.css">
 </head>
 <body>
-    <div class="container mt-5">
+    <style>
+        .card {
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+        h1 {
+           font-size: 40px;
+        }
+        
+        
+        p {
+            font-size:20px;
+        }
+        
+        h2 {
+            font-size: 25px;
+            font-weight: normal;
+        }
+        
+        .container {
+            margin: 0 auto;
+            width: 7%;
+            background-color: white;
+        }
+        
+        .card-title {
+            color: #000000;
+        }
+            
+        .card-subtitle,
+        .card-text {
+            color: #000000; 
+        }
+            
+        .card-text strong {
+            color: #000000; 
+        }
+        body{
+            background-color: white;
+        }
+        button{
+            font-size: 30px;
+        }
+    </style>
+    <div class="mt-5">
         <div class="card">
             <div class="card-body">
 
-                <h1 class="card-title">Name :{{book.title}}</h1>
-                <h2 class="card-subtitle mb-2 text-muted">Author: {{book.author}}</h2>
-                <p class="card-text">Description: {{book.description}}</p>
-                <p class="card-text"><strong>Release Date:</strong> {{book.release}}</p>
-                <p class="card-text"><strong>ISBN:</strong> {{book.isbn}}</p>
+                <h1 class="card-title">{{book.title}}</h1>
+                <h2 class="card-subtitle mb-2 text-muted"><strong>Author:</strong> {{book.author}}</h2>
+                <h2 class="card-text"><strong>Description:</strong> {{book.description}} </h2> 
+                <h2 class="card-text"><strong>Price:</strong> {{book.price}}</h2>            
+                <p  class="card-text">Release Date: {{book.release}}</p>
+                <p class="card-text">ISBN: {{book.isbn}}</p>
+
+
+                <div class="container">
+                    <button onclick="confirmOrder()">Order</button>
+                    
+                </div>
+
+                <script>
+                    function confirmOrder() {
+                        var userConfirmed = confirm("Do you want to do order the product?");
+                        if (userConfirmed) {
+
+                            window.location.href = "/basket/{{book.id}}";
+                        } else {
+                            window.location.href = "/book/<int:product_id>";
+                        }
+                    }
+                </script>
 
             </div>
         </div>

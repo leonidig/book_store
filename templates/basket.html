@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order - {{book.title}}</title>
+</head>
+<body>
+    <style>
+        h1{
+            font-size: xx-large;
+        }
+        table, th {
+            border: 2px solid rgb(150, 150, 150);
+            border-collapse: collapse;
+            border-style: dotted;
+            font-size: x-large;
+            text-align: center;
+            height: max-content;
+        }
+        td{
+            border: 2px solid rgb(150, 150, 150);
+            border-collapse: collapse;
+            border-style: dotted;
+            font-weight: normal;
+            text-align: center;
+            font-size: large;
+        }
+            
+    </style>
+    <h1>Basket:</h1>
+    <table style="width:100%">
+        <tr>
+            <th>Book Name</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td><strong>{{book.title}}</strong></td>
+            <td><strong>{{book.price}}</strong></td>
+        </tr>
+    </table>
+        <form action="{{url_for('post_basket', product_id=book.id)}}" method="post">
+            <label for="city">Country:</label>
+            <input type="text" id="country" name="country" required><br><br>
+            
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required><br><br>
+            
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street" required><br><br>
+            
+            <label for="house">House:</label>
+            <input type="text" id="house" name="house" required><br><br>
+            
+            <input type="submit" value="Submit">
+</body>
+</html>

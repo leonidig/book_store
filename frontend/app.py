@@ -1,14 +1,17 @@
 from os import getenv
-
+import os, sys
 from flask import Flask, render_template, request, redirect, flash, url_for
 from requests import get, Response, post
 from flask_login import current_user, login_required, LoginManager
 from forms import RegisterForm, LoginForm
 from sqlalchemy import select
-from db import User, Session
+
 from flask_login import login_user
 from dotenv import load_dotenv
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from db import Session, User, Book
 
 load_dotenv()
 SECRET_KEY = getenv("SECRET_KEY")
@@ -30,6 +33,14 @@ def index():
     print(books)
     return render_template("index.html", **books)
 
+@app.get("/search")
+def search():
+    query = request.args.get('query','')
+    if query:
+        books = get(f"{BOOKS_URL}/get_books").json()
+        filtered = [book for book in books if query.lower() in book['title'].lower()]
+        return render_template("index.html", books = filtered, query = query)
+    
                                                        
 @app.get("/book/<int:product_id>")
 @login_required
@@ -130,7 +141,8 @@ def post_basket(product_id):
     order = post(f"{ORDERS_URL}/basket/add", json=data)
     if order.status_code == 200:
         response_data = order.json()
-        return(response_data)
+        return redirect(url_for('/'))
+
     
     return(f"Error {order.status_code}")
     

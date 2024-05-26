@@ -1,9 +1,12 @@
 from fastapi import FastAPI
-from db import Book, Session
+import sys, os
 from sqlalchemy import select
 from datetime import datetime
 import random
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from db import Session, User, Book
 
 app = FastAPI()
 

@@ -20,8 +20,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <form class="d-flex me-auto" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex me-auto" role="search" action="{{ url_for('search') }}" method="get">
+          <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search" value="{{ request.args.get('query', '') }}">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <div>
@@ -36,15 +36,20 @@
   <h1>{% block title %} Welcome to Book - Store {% endblock %}</h1>
   
 
-  
-  {% for book in books %}
-    <a href="{{ url_for('index') }}">
-      <h2><a href="/book/{{book.id}}">{{ book.title }}</a></h2>
-      
-    </a>
-    <span class="badge badge-primary">{{ book.price }}$</span>
-    <hr>
-  {% endfor %}
+  {% if books %}
+    {% for book in books %}
+    <div class="book-item">
+      <a href="{{ url_for('index') }}">
+        <h2><a href="/book/{{book.id}}">{{ book.title }}</a></h2>
+        
+      </a>
+      <span class="badge badge-primary">{{ book.price }}$</span>
+      <hr>
+    </div>
+{% endfor %}
+  {% else %}
+    <p>Books not found</p>
+  {% endif %}
   {% endblock %}      
 
 </body>

@@ -1,34 +1,24 @@
 version: '3.8'
 services:
-  app:
-    restart: always
-    build:
-    context: .
-    dockerfile: ./frontend/DockerFile
-
+  frontend:
+    build: ./frontend
     ports:
-      - "5000:5000" #5000
-    command: sh -c "flask --app app run --debug"
+      - "5000:5000"
     depends_on:
       - books
       - orders
-    
+    environment:
+      - BOOKS_URL=http://127.0.0.1:8000
+      - ORDERS_URL=http://127.0.0.1:5050
   books:
-    restart: always
-    build:
-    context: .
-    dockerfile: ./backend/DockerFile
-
-    ports: 
-      - "8000:8000" #8000
-    command: sh -c "fastapi dev books.py"
+    build: ./books
+    ports:
+      - "8000:8000"
   orders:
-    restart: always
-    build:
-    context: .
-    dockerfile: ./backend/DockerFile
-
-    ports: 
-      - "5050:5050" #5050
-    command: sh -c "uvicorn orders:app --host 127.0.0.1 --port 5050 "
-  
+    build: ./orders
+    ports:
+      - "5050:5050"
+  db:
+    image: alpine/sqlite
+    volumes:
+      - ./my_db.db:/my_db.db

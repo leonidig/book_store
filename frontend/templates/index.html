@@ -45,13 +45,23 @@
       margin-left: 35px;
     }
 
+
   </style>
   
-  {% for book in books %}
-    <h2>{{ book.title }}<span class="badge badge-primary" style="margin-left: 220px;">{{ book.price }}$</span></h2>
-    <a class="btn btn-primary float-right" href="/book/{{book.id}}">Further</a>
-    <hr>
-  {% endfor %}
+
+
+  {% if books %}
+    {% for book in books %}
+    <div class="book-item">
+      <h2>{{ book.title }}<span class="badge badge-primary" style="margin-left: 220px;">{{ book.price }}$</span></h2>
+      <a class="btn btn-primary float-right" href="/book/{{book.id}}">Further</a>
+      <hr>
+    </div>
+{% endfor %}
+  {% else %}
+    <p>Books not found</p>
+  {% endif %}
+
   {% endblock %}      
 
 </body>

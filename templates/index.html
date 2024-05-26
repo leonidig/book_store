@@ -33,16 +33,23 @@
   </nav>
   
   {% block content %}
-  <h1>{% block title %} Welcome to Book - Store {% endblock %}</h1>
+  <h1>{% block title %} Welcome to the Book Store {% endblock %}</h1>
   
+  <style>
+    .float-right {
+      float: right;
+      margin-top: -40px;
+      margin-right: 60px;
+    }
+    h2 {
+      margin-left: 35px;
+    }
 
+  </style>
   
   {% for book in books %}
-    <a href="{{ url_for('index') }}">
-      <h2><a href="/book/{{book.id}}">{{ book.title }}</a></h2>
-      
-    </a>
-    <span class="badge badge-primary">{{ book.price }}$</span>
+    <h2>{{ book.title }}<span class="badge badge-primary" style="margin-left: 220px;">{{ book.price }}$</span></h2>
+    <a class="btn btn-primary float-right" href="/book/{{book.id}}">Further</a>
     <hr>
   {% endfor %}
   {% endblock %}      

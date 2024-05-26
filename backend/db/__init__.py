@@ -16,8 +16,8 @@ def up():
 def down():
     Base.metadata.drop_all(engine)
 
-from .models import Book, User, Order
 
+from .models import Book, Order
 
-
+down()
 up()

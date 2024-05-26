@@ -8,17 +8,15 @@ from sqlalchemy import select
 
 from flask_login import login_user
 from dotenv import load_dotenv
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from db import Session, User, Book
+from db import Session, User
+from os import getenv
 
 load_dotenv()
 SECRET_KEY = getenv("SECRET_KEY")
 app = Flask("frontend")
 app.config['SECRET_KEY'] = SECRET_KEY
-BOOKS_URL = "http://127.0.0.1:8000"
-ORDERS_URL = "http://127.0.0.1:5050"
+BACKEND_URL = getenv("BACKEND_URL")#"http://127.0.0.1:8000"
+
 login_manager = LoginManager()
 login_manager.login_view = "login"
 login_manager.init_app(app)
@@ -28,7 +26,7 @@ login_manager.init_app(app)
 @app.get("/")
 def index():
     books = {
-        "books":get(f"{BOOKS_URL}/get_books").json()
+        "books":get(f"{BACKEND_URL}/get_books").json()
     }
     print(books)
     return render_template("index.html", **books)
@@ -37,7 +35,7 @@ def index():
 def search():
     query = request.args.get('query','')
     if query:
-        books = get(f"{BOOKS_URL}/get_books").json()
+        books = get(f"{BACKEND_URL}/get_books").json()
         filtered = [book for book in books if query.lower() in book['title'].lower()]
         return render_template("index.html", books = filtered, query = query)
     
@@ -45,7 +43,7 @@ def search():
 @app.get("/book/<int:product_id>")
 @login_required
 def product(product_id):                    
-    books = get(f"{BOOKS_URL}/get_books").json()
+    books = get(f"{BACKEND_URL}/get_books").json()
     selected_product = None
     
     for product in books:
@@ -115,7 +113,7 @@ def login_post():
 @app.get("/basket/<int:product_id>")
 def basket(product_id):
     selected_product = None
-    books = get(f"{BOOKS_URL}/get_books").json()
+    books = get(f"{BACKEND_URL}/get_books").json()
     
     for product in books:
         if product['id'] == product_id:
@@ -138,10 +136,10 @@ def post_basket(product_id):
         "house": request.form['house']
     }
     print(data)
-    order = post(f"{ORDERS_URL}/basket/add", json=data)
+    order = post(f"{BACKEND_URL}/basket/add", json=data)
     if order.status_code == 200:
         response_data = order.json()
-        return redirect(url_for('/'))
+        return redirect(url_for('index'))
 
     
     return(f"Error {order.status_code}")

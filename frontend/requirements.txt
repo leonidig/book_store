@@ -5,3 +5,4 @@ flask_login
 Flask-WTF
 WTForms
 python-dotenv
+email_validator

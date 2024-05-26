@@ -1,24 +1,22 @@
 version: '3.8'
+
 services:
+  backend:
+    build: ./backend
+    expose:
+      - "8134:8134"
+    ports:
+      - "8134:8134"
+
   frontend:
+    restart: always
     build: ./frontend
+    expose:
+      - "5000:5000"
     ports:
       - "5000:5000"
+
     depends_on:
-      - books
-      - orders
+      - backend
     environment:
-      - BOOKS_URL=http://127.0.0.1:8000
-      - ORDERS_URL=http://127.0.0.1:5050
-  books:
-    build: ./books
-    ports:
-      - "8000:8000"
-  orders:
-    build: ./orders
-    ports:
-      - "5050:5050"
-  db:
-    image: alpine/sqlite
-    volumes:
-      - ./my_db.db:/my_db.db
+      - BACKEND_URL=http://backend:8134

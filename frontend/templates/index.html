@@ -40,7 +40,7 @@
     {% for book in books %}
     <div class="book-item">
       <a href="{{ url_for('index') }}">
-        <h2><a href="/book/{{book.id}}">{{ book.title }}</a></h2>
+        <h2><a href="/book/{{book.id}}">{{ book.title }}{{ book.id }}</a></h2>
         
       </a>
       <span class="badge badge-primary">{{ book.price }}$</span>

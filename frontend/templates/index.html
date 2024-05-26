@@ -20,8 +20,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <form class="d-flex me-auto" role="search" action="{{ url_for('search') }}" method="get">
-          <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search" value="{{ request.args.get('query', '') }}">
+        <form class="d-flex me-auto" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <div>
@@ -33,23 +33,35 @@
   </nav>
   
   {% block content %}
-  <h1>{% block title %} Welcome to Book - Store {% endblock %}</h1>
+  <h1>{% block title %} Welcome to the Book Store {% endblock %}</h1>
   
+  <style>
+    .float-right {
+      float: right;
+      margin-top: -40px;
+      margin-right: 60px;
+    }
+    h2 {
+      margin-left: 35px;
+    }
+
+
+  </style>
+  
+
 
   {% if books %}
     {% for book in books %}
     <div class="book-item">
-      <a href="{{ url_for('index') }}">
-        <h2><a href="/book/{{book.id}}">{{ book.title }}{{ book.id }}</a></h2>
-        
-      </a>
-      <span class="badge badge-primary">{{ book.price }}$</span>
+      <h2>{{ book.title }}<span class="badge badge-primary" style="margin-left: 220px;">{{ book.price }}$</span></h2>
+      <a class="btn btn-primary float-right" href="/book/{{book.id}}">Further</a>
       <hr>
     </div>
 {% endfor %}
   {% else %}
     <p>Books not found</p>
   {% endif %}
+
   {% endblock %}      
 
 </body>

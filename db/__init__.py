@@ -21,4 +21,3 @@ from .models import Book, User, Order
 
 
 up()
-down()

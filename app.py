@@ -120,7 +120,7 @@ def basket(product_id):
 @app.post("/basket/<int:product_id>")
 def post_basket(product_id):
     data = {
-        "nickname": "current_user.nickname",
+        "nickname": current_user.email,
         "country": request.form['country'],
         "city": request.form['city'],
         "street": request.form['street'],

@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  app:
+    restart: always
+    build:
+    context: .
+    dockerfile: ./frontend/DockerFile
+
+    ports:
+      - "5000:5000" #5000
+    command: sh -c "flask --app app run --debug"
+    depends_on:
+      - books
+      - orders
+    
+  books:
+    restart: always
+    build:
+    context: .
+    dockerfile: ./backend/DockerFile
+
+    ports: 
+      - "8000:8000" #8000
+    command: sh -c "fastapi dev books.py"
+  orders:
+    restart: always
+    build:
+    context: .
+    dockerfile: ./backend/DockerFile
+
+    ports: 
+      - "5050:5050" #5050
+    command: sh -c "uvicorn orders:app --host 127.0.0.1 --port 5050 "
+  

@@ -2,6 +2,11 @@ version: '3.8'
 
 services:
   backend:
+    # develop:
+    #   watch: 
+    #     # rebuild image and recreate service
+    #     - path: ./backend
+    #       action: rebuild
     build: ./backend
     expose:
       - "8134:8134"
@@ -9,6 +14,11 @@ services:
       - "8134:8134"
 
   frontend:
+    # develop:
+    #   watch: 
+    #     # rebuild image and recreate service
+    #     - path: ./frontend
+    #       action: rebuild
     restart: always
     build: ./frontend
     expose:

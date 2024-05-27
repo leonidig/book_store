@@ -5,11 +5,13 @@ from requests import get, Response, post
 from flask_login import current_user, login_required, LoginManager
 from forms import RegisterForm, LoginForm
 from sqlalchemy import select
-
+from werkzeug.utils import secure_filename
 from flask_login import login_user
 from dotenv import load_dotenv
 from db import Session, User
 from os import getenv
+from base64 import b64encode
+
 
 load_dotenv()
 SECRET_KEY = getenv("SECRET_KEY")
@@ -21,7 +23,7 @@ login_manager = LoginManager()
 login_manager.login_view = "login"
 login_manager.init_app(app)
 
-
+import logging
 
 @app.get("/")
 def index():
@@ -39,6 +41,8 @@ def search():
         filtered = [book for book in books if query.lower() in book['title'].lower()]
         return render_template("index.html", books = filtered, query = query)
     
+
+
                                                        
 @app.get("/book/<int:product_id>")
 @login_required
@@ -144,7 +148,41 @@ def post_basket(product_id):
     
     return(f"Error {order.status_code}")
     
+@app.post("/create_book")
+def create_book():
+    file = request.files.get('photo')
+    filename = secure_filename(file.filename)
+    file.save(filename)
+    with open(filename, "rb") as filename:
+        photo = filename.read()
+    # price: float
+    # title: str
+    # description: str
+    # author: str
+    # isbn: str
+    data = {
+        # TODO: "id"
+        "title": request.form['title'],
+        "description": request.form['description'],
+        "author": request.form['author'],
+        "price": float(request.form['price']),
+        # TODO:"release": 
+        "isbn": request.form['isbn'],
+        "photo": b64encode(photo).decode("utf-8"),
+    }
     
+    # return data
+    book = post(f"{BACKEND_URL}/create_book", json=data)
+    if book.status_code == 200:
+        return redirect(url_for("index"))
+    return(f"Error {book.status_code}")
+
+ 
+ 
+@app.get('/create_book')
+def get_create_book():
+    return render_template("create.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

@@ -20,52 +20,41 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <form class="d-flex me-auto" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex me-auto" role="search" action="{{ url_for('search') }}" method="get">
+          <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search" value="{{ request.args.get('query', '') }}">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <div>
           <a href="/register" class="btn btn-primary">Register</a>
           <a href="/login" class="btn btn-primary">Auth</a>
+          <a href="/create_book" class="btn btn-primary">Create Book</a>
         </div>
       </div>
     </div>
   </nav>
   
-  {% block content %}
+
+
+{% block content %}
   <h1>{% block title %} Welcome to the Book Store {% endblock %}</h1>
-  
-  <style>
-    .float-right {
-      float: right;
-      margin-top: -40px;
-      margin-right: 60px;
-    }
-    h2 {
-      margin-left: 35px;
-    }
+    {% if books%}
+    
+      <table id="bookTable">
+        {%for book in books%}
+        <div class="container">
+          <img src="data:;base64,{{ book.photo }}" class="card-img-top"  alt="{{ book.title }} cover"/>
+          <h1>{{ book.photo }}</h1>
+          <h2>{{ book.title }}</h2>
+          <h3><span class="badge badge-primary" style="margin-left: 220px;">{{ book.price }}$</span></h3>
+          <a class="btn btn-primary float-right" href="/book/{{book.id}}">Further</a>
+        </div>
+        {% endfor %}
+      </table>
+      {% endif %}  
 
 
-  </style>
-  
-
-
-  {% if books %}
-    {% for book in books %}
-    <div class="book-item">
-      <h2>{{ book.title }}<span class="badge badge-primary" style="margin-left: 220px;">{{ book.price }}$</span></h2>
-      <a class="btn btn-primary float-right" href="/book/{{book.id}}">Further</a>
-      <hr>
-    </div>
-{% endfor %}
-  {% else %}
-    <p>Books not found</p>
-  {% endif %}
-
-  {% endblock %}      
-
+{% endblock %}
 </body>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

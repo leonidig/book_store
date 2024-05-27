@@ -1,0 +1,49 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Add a New Book</h1>
+<form action="{{ url_for('create_book') }}" method="POST" enctype="multipart/form-data">
+
+    <div class="input-group mb-3">
+        <span class="input-group-text"  id="title">Title</span>
+        <input type="text" required name="title" id="title" class="form-control" placeholder="Title" aria-label="Title"
+            aria-describedby="title">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text"  id="description">Description</span>
+        <input type="text" required name="description" id="description" class="form-control" placeholder="Description" aria-label="Description"
+            aria-describedby="description">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text"  id="price">Price</span>
+        <input type="number" required name="price" id="price" class="form-control" placeholder="Price" aria-label="Price"
+            aria-describedby="price">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text"  id="author">Author</span>
+        <input type="text" required name="author" id="author" class="form-control" placeholder="Author" aria-label="Author"
+            aria-describedby="author">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text"  id="isbn">ISBN</span>
+        <input type="text" required name="isbn" id="isbn" class="form-control" placeholder="ISBN" aria-label="ISBN"
+            aria-describedby="isbn">
+    </div>
+
+    <div class="input-group mb-3">
+        <input type="file" class="form-control" name="photo" id="photo">
+        <label class="input-group-text" for="photo" >Cover Image</label>
+    </div>
+
+    <div class="input-group mb-3">
+        <button type="submit" class="btn btn-primary mb-3">Add Book</button>
+    </div>
+
+</form>
+
+{% endblock %}

@@ -33,13 +33,28 @@
     </div>
   </nav>
   
+<style>
+  .parent {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .container {
+    flex: 0 0 calc(25% - 20px);
+    padding: 10px;
+    margin: 5px;
+  }
+  
+  .container:nth-child(4n+1) {
+    clear: left;
+  }
+</style>
 
 
 {% block content %}
   <h1>{% block title %} Welcome to the Book Store {% endblock %}</h1>
     {% if books%}
-    
-      <table id="bookTable">
+      <div class="parent">
         {%for book in books%}
         <div class="container">
           <img src="data:;base64,{{ book.photo }}" class="card-img-top"  alt="{{ book.title }} cover"/>
@@ -49,11 +64,10 @@
           <a class="btn btn-primary float-right" href="/book/{{book.id}}">Further</a>
         </div>
         {% endfor %}
-      </table>
+      </div>
       {% endif %}  
 
-
-{% endblock %}
+{% endblock %}]
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

@@ -1,2 +1,2 @@
-from .book import BookData
-from .order import OrderData
+from .book import BookData, DeletedBook
+from .order import OrderData, OrderDelete

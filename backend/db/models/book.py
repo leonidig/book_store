@@ -10,6 +10,7 @@ class Book(Base):
     title: Mapped[str]
     price: Mapped[float]
     description: Mapped[str]
+    book_creator: Mapped[str]
     author: Mapped[str]
     release: Mapped[date] = mapped_column(nullable=True)
     isbn: Mapped[str] = mapped_column(String(13))

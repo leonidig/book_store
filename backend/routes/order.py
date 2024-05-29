@@ -1,6 +1,7 @@
 from main import app
 from db import Session, Order
-from schemas import OrderData
+from schemas import OrderData, OrderDelete
+from sqlalchemy import select
 
 # def mock_data()->list[Book]: #TODO: Переробити мок данних для замовлень
 #     return [
@@ -17,3 +18,18 @@ def post_order(data: OrderData):
         order = Order(**data.model_dump())
         session.add(order)
         return order 
+
+@app.get("/orders/{user_email}")
+def user_orders(user_email):
+    with Session.begin() as session:
+        orders = session.scalars(select(Order).where(Order.nickname == user_email)).all()
+        print(orders)
+        return [order.book_name for order in orders]
+    
+@app.delete("/cancel_order")
+def cancel_order(data: OrderDelete):
+    with Session.begin() as session:
+        order = session.scalar(select(Order).where(Order.book_name == data.book_name).where(Order.nickname == data.current_user))
+        session.delete(order)
+        return "Book succesfully deleted"
+    

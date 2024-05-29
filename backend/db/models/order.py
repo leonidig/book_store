@@ -11,3 +11,4 @@ class Order(Base):
     city: Mapped[str]
     street: Mapped[str]
     house: Mapped[str]
+    book_name: Mapped[str]

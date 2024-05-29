@@ -1,7 +1,7 @@
 from os import getenv
 import os, sys
 from flask import Flask, render_template, request, redirect, flash, url_for
-from requests import get, Response, post
+from requests import get, Response, post, delete
 from flask_login import current_user, login_required, LoginManager
 from forms import RegisterForm, LoginForm
 from sqlalchemy import select
@@ -30,7 +30,6 @@ def index():
     books = {
         "books":get(f"{BACKEND_URL}/get_books").json()
     }
-    print(books)
     return render_template("index.html", **books)
 
 @app.get("/search")
@@ -132,12 +131,15 @@ def basket(product_id):
 
 @app.post("/basket/<int:product_id>")
 def post_basket(product_id):
+    book = get(f"{BACKEND_URL}/book/{product_id}").json()
+    book_name = book.get("title")
     data = {
         "nickname": current_user.email,
         "country": request.form['country'],
         "city": request.form['city'],
         "street": request.form['street'],
-        "house": request.form['house']
+        "house": request.form['house'],
+        "book_name": book_name
     }
     print(data)
     order = post(f"{BACKEND_URL}/basket/add", json=data)
@@ -149,24 +151,20 @@ def post_basket(product_id):
     return(f"Error {order.status_code}")
     
 @app.post("/create_book")
+@login_required
 def create_book():
     file = request.files.get('photo')
     filename = secure_filename(file.filename)
     file.save(filename)
     with open(filename, "rb") as filename:
         photo = filename.read()
-    # price: float
-    # title: str
-    # description: str
-    # author: str
-    # isbn: str
     data = {
-        # TODO: "id"
+        "id": len(get(f"{BACKEND_URL}/get_books").json()) + 1,
         "title": request.form['title'],
         "description": request.form['description'],
+        "book_creator": current_user.email,
         "author": request.form['author'],
         "price": float(request.form['price']),
-        # TODO:"release": 
         "isbn": request.form['isbn'],
         "photo": b64encode(photo).decode("utf-8"),
     }
@@ -180,9 +178,51 @@ def create_book():
  
  
 @app.get('/create_book')
+@login_required
 def get_create_book():
     return render_template("create.html")
+    
 
+@app.get("/delete_book/<int:product_id>")
+def delete_book(product_id):
+    current = current_user.email
+    # book_id: int, current_user: str, book_creator: str
+    print(get(f"{BACKEND_URL}/book/{product_id}").json())
+    book = get(f"{BACKEND_URL}/book/{product_id}").json()
+    book_creator = book.get("book_creator")
+    print(book_creator)
+    data={
+        "book_id": product_id,
+        "current_user": current,
+        "book_creator": book_creator
+    }
+    deleted_book = delete(f"{BACKEND_URL}/delete_book/{product_id}", json=data)
+    if deleted_book.status_code == 200:
+        return redirect(url_for("index"))
+    return(f"Error {deleted_book.status_code}")
+    
+
+
+@app.get("/my_orders")
+@login_required
+def my_orders():
+    user_email = current_user.email
+    print(get(f"{BACKEND_URL}/orders/{user_email}").json())
+    orders = get(f"{BACKEND_URL}/orders/{user_email}").json()
+    print(orders)
+    # orders_names = [order.get("book_name") for order in orders]
+    return render_template("orders.html", orders=orders)
+
+@app.get("/cancel_order/<string:book_name>")
+def cancel_order(book_name):
+    data = {
+        "book_name": book_name,
+        "current_user": current_user.email
+    }
+    canceled_order = delete(f"{BACKEND_URL}/cancel_order", json=data)
+    if canceled_order.status_code == 200:
+        return redirect(url_for("index"))
+    return(f"Error {canceled_order.status_code}")
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

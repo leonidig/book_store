@@ -184,6 +184,7 @@ def get_create_book():
     
 
 @app.get("/delete_book/<int:product_id>")
+@login_required
 def delete_book(product_id):
     current = current_user.email
     # book_id: int, current_user: str, book_creator: str
@@ -214,6 +215,7 @@ def my_orders():
     return render_template("orders.html", orders=orders)
 
 @app.get("/cancel_order/<string:book_name>")
+@login_required
 def cancel_order(book_name):
     data = {
         "book_name": book_name,

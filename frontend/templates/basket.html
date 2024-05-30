@@ -4,29 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order - {{book.title}}</title>
+    <link rel="stylesheet" href="basket.css">
 </head>
 <body>
     <style>
-        h1{
-            font-size: xx-large;
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
         }
-        table, th {
-            border: 2px solid rgb(150, 150, 150);
-            border-collapse: collapse;
-            border-style: dotted;
-            font-size: x-large;
+
+        h1 {
             text-align: center;
-            height: max-content;
+            color: #bb86fc;
+            margin-top: 20px;
         }
-        td{
-            border: 2px solid rgb(150, 150, 150);
+
+        table {
+            width: 80%;
+            margin: 20px auto;
             border-collapse: collapse;
-            border-style: dotted;
-            font-weight: normal;
-            text-align: center;
-            font-size: large;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
-            
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333333;
+        }
+
+        th {
+            background-color: #1f1f1f;
+            color: #bb86fc;
+        }
+
+        td {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        form {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #1f1f1f;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #333333;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #333333;
+            color: #e0e0e0;
+        }
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #bb86fc;
+            color: #121212;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #9e67f4;
+        }
+        
     </style>
     <h1>Basket:</h1>
     <table style="width:100%">

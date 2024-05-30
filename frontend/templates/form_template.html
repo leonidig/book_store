@@ -1,14 +1,19 @@
 {% extends "index.html" %}
 
-{% from '__helpers.html' import form_generate   %}
+{% from '__helpers.html' import form_generate %}
+<link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
 
 {% block content %}
-{% with messages=get_flashed_messages() %}
+<div class="container">
+    {% with messages = get_flashed_messages() %}
         {% if messages %}
-            {% for message in messages %}
-            <p>{{message}}</p>
-            {% endfor %}
-        {%endif%}
+            <div class="form-message">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endwith %}
     {{ form_generate(form) }}
+</div>
 {% endblock content %}

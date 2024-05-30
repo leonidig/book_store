@@ -108,8 +108,9 @@
                 <h2 class="card-text"><strong>Price:</strong> {{book.price}}</h2>            
                 <p class="card-text">Release Date: {{book.release}}</p>
                 <p class="card-text">ISBN: {{book.isbn}}</p>
-                <a class="btn-danger" href="javascript:void(0);" onclick="confirmDelete()">Delete Book</a>
-
+                {% if current_user.name == book.author %}
+                    <a class="btn-danger" href="javascript:void(0);" onclick="confirmDelete()">Delete Book</a>
+                {% endif %}
                 <div class="container">
                     <button onclick="confirmOrder()">Order</button>
                 </div>

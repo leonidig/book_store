@@ -13,6 +13,14 @@ from wtforms.validators import (
 
 
 class LoginForm(FlaskForm):
-    nickname = StringField(validators=[DataRequired(),])
-    password = PasswordField(validators=[DataRequired(),])
+    email = StringField(
+        validators=[
+            DataRequired(),
+        ]
+    )
+    password = PasswordField(
+        validators=[
+            DataRequired(),
+        ]
+    )
     submit = SubmitField("Log In")

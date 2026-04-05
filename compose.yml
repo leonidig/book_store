@@ -8,8 +8,6 @@ services:
     #     - path: ./backend
     #       action: rebuild
     build: ./backend
-    expose:
-      - "8134:8134"
     ports:
       - "8134:8134"
 
@@ -21,8 +19,6 @@ services:
     #       action: rebuild
     restart: always
     build: ./frontend
-    expose:
-      - "5000:5000"
     ports:
       - "5000:5000"
 
